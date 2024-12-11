@@ -72,7 +72,7 @@ int main() {
     return 0;
 }
 // BRUTE FORCE SOLUTION 
-/*void changeFunction(lint leftIndex, lint rightIndex, lint change, vector<lint>& arr) {
+void changeFunction(lint leftIndex, lint rightIndex, lint change, vector<lint>& arr) {
     leftIndex--;rightIndex--;
     forloop(leftIndex, rightIndex + 1) {
         arr[i] += change;
@@ -92,4 +92,6 @@ void solveFunction(vector<lint>& arr, vector<pair<lint, pair<lint, lint>>>& ops,
         lint right = queries[i].second;
         solveSolveFunction(left, right, arr, ops);
     }
-}*/
+}
+
+

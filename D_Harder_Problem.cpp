@@ -12,8 +12,25 @@ using namespace std;
 #define lintmax LLONG_MAX
 #define lintmin LLONG_MIN
 #define mp(x,y) make_pair(x,y)
-
-vector<lint> solveFunction(vector<lint>& arr) {
+vector<lint>solveFunction(vector<lint>&arr){
+    lint n=arr.size();set<lint>st;
+    forloop(1,n+1){
+        st.insert(i);
+    }
+    vector<lint>ans;
+    forloop(0,arr.size()){
+        if(st.find(arr[i])!=st.end()){
+            ans.push_back(arr[i]);
+            st.erase(arr[i]);
+        }
+        else{
+            ans.push_back(*st.begin());
+            st.erase(*st.begin());
+        }
+    }
+    return ans;
+}
+/*vector<lint> solveFunction(vector<lint>& arr) {
     lint n = arr.size();
     vector<lint> freq(n + 1, 0);
     vector<lint> b(n);
@@ -50,7 +67,7 @@ vector<lint> solveFunction(vector<lint>& arr) {
         }
     }
     return b;
-}
+}*/
 
 void solution(int test){
     while(test--){

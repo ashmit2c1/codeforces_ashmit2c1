@@ -12,37 +12,25 @@ using namespace std;
 #define lintmax LLONG_MAX
 #define lintmin LLONG_MIN
 #define mp(x,y) make_pair(x,y)
-string solveFunction(lint a, lint b, lint c) {
-    if(c&1){
-        if(b>a){
-            return "Second";
-        }
-        else{
-            return "First";
-        }
+
+
+bool solvefunction(lint angle){
+    if(360%(180-angle)==0){
+        return true;
     }
-    else{
-        if(a>b){
-            return "First";
-        }
-        else{
-            return "Second";
-        }
-    }
+    return false;
 }
 
-void solution(int test) {
-    while (test--) {
-        lint a, b, c;
-        cin >> a >> b >> c;
-        string ans = solveFunction(a, b, c);
-        print(ans);
+void solution(int test){
+    while(test--){
+        lint angle;cin >> angle;
+        bool ans=solvefunction(angle);
+        if(ans==true){print("YES")}else{print("NO")}
+
     }
 }
-
-int main() {
+int main(){
     int test;
     cin >> test;
     solution(test);
-    return 0;
 }

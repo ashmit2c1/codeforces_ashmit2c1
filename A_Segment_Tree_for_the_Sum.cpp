@@ -18,35 +18,21 @@ class SegmentTree{
         vector<lint>sumtree;
         vector<lint>arr;
         lint n;
-        // building sum tree
-        void buildSumTree(lint node,lint start,lint end){
+        // build max
+        void buildsum(lint node,lint start,lint end){
             if(start==end){
                 sumtree[node]=arr[start];
             }else{
                 lint mid = start + (end-start)/2;
-                lint leftchild = 2*node+1;
-                lint rightchild = 2*node+2;
-                buildSumTree(leftchild,start,mid);
-                buildSumTree(rightchild,mid+1,end);
-                sumtree[node]=sumtree[leftchild]+sumtree[rightchild];
+                lint left=2*node+1;
+                lint right=2*node+2;
+                buildsum(left,start,mid);
+                buildsum(right,mid+1,end);
+                sumtree[node]=sumtree[left]+sumtree[right];
             }
         }
-        void update(lint node,lint start,lint end,lint index,lint value){
-            if(start==end){
-                sumtree[node]=value;
-            }else{
-                lint mid = start + (end-start)/2;
-                lint leftchild = 2*node+1;
-                lint rightchild = 2*node+2;
-                if(index<=mid){
-                    update(leftchild,start,mid,index,value);
-                }else{
-                    update(rightchild,mid+1,end,index,value);
-                }
-                sumtree[node]=sumtree[leftchild]+sumtree[rightchild];
-            }
-        }
-        int querySum(lint node,lint start,lint end,lint L,lint R){
+        // query max 
+        lint querysum(lint node,lint start,lint end,lint L,lint R){
             if(R<start || L>end){
                 return 0;
             }
@@ -54,54 +40,75 @@ class SegmentTree{
                 return sumtree[node];
             }
             lint mid = start + (end-start)/2;
-            lint leftchild = 2*node+1;
-            lint rightchild = 2*node+2;
-            return querySum(leftchild,start,mid,L,R) + querySum(rightchild,mid+1,end,L,R);
+            lint left = 2*node+1;
+            lint right = 2*node+2;
+            return querysum(left,start,mid,L,R) + querysum(right,mid+1,end,L,R);
         }
-        public:
-            SegmentTree(vector<lint>&inputarr){
-                n=inputarr.size();
-                arr=inputarr;
-                sumtree.resize(4*n);
-                buildSumTree(0,0,n-1);
+        // update sum 
+        void updatesum(lint node,lint start,lint end,lint index,lint value){
+            if(start==end){
+                sumtree[node]=value;
+            }else{
+                lint mid = start + (end-start)/2;
+                lint left = 2*node+1;
+                lint right = 2*node+2;
+                if(index<=mid){
+                    updatesum(left,start,mid,index,value);
+                }else{
+                    updatesum(right,mid+1,end,index,value);
+                }
+                sumtree[node]=sumtree[left]+sumtree[right];
             }
-            lint rangeSum(lint L,lint R){
-                return querySum(0,0,n-1,L,R);
-            }
-            void updateValue(lint index,lint value){
-                update(0,0,n-1,index,value);
-            }
+        }
+
+
+    public:
+        SegmentTree(vector<lint>&inputarr){
+            n=inputarr.size();
+            arr=inputarr;
+            sumtree.resize(4*n,0);
+            buildsum(0,0,n-1);
+        }
+        lint rangesum(lint L,lint R){
+            return querysum(0,0,n-1,L,R);
+        }
+        void updatevalue(lint index,lint value){
+            updatesum(0,0,n-1,index,value);
+        }
 };
+
 
 vector<lint>solvefunction(vector<lint>&arr,vector<pair<lint,pair<lint,lint>>>&queries){
     vector<lint>ans;
-    SegmentTree segTree(arr);
+    SegmentTree segtree(arr);
     forloop(0,queries.size()){
         lint type = queries[i].first;
-        lint first = queries[i].second.first;
-        lint second = queries[i].second.second;
         if(type==1){
-            segTree.updateValue(first,second);
+            lint index = queries[i].second.first;
+            lint value = queries[i].second.second;
+            segtree.updatevalue(index,value);
         }else{
-            lint answer=segTree.rangeSum(first,second-1);
+            lint left = queries[i].second.first;
+            lint right = queries[i].second.second;
+            lint answer = segtree.rangesum(left,right-1);
             ans.push_back(answer);
         }
     }
     return ans;
 }
 void solution(){
-    lint n;cin >>n;
+    lint n;cin >> n;
     lint q;cin >> q;
     vector<lint>arr;
-    forloop(0,n){lint x;cin >> x;arr.push_back(x);}
+    forloop(0,n){lint x; cin >> x;arr.push_back(x);}
     vector<pair<lint,pair<lint,lint>>>queries;
     forloop(0,q){
-        lint type;lint index;lint value;
-        cin >> type >> index >> value;
-        queries.push_back({type,{index,value}});
+        lint a;lint b;lint c;
+        cin >> a >> b >> c;
+        queries.push_back({a,{b,c}});
     }
     vector<lint>ans=solvefunction(arr,queries);
-    for(int i=0;i<ans.size();i++){
+    forloop(0,ans.size()){
         cout << ans[i] << "\n";
     }
 

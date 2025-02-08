@@ -12,26 +12,34 @@ using namespace std;
 #define lintmax LLONG_MAX
 #define lintmin LLONG_MIN
 #define mp(x,y) make_pair(x,y)
-lint solvefunction(lint n){
-    lint ans=1;
-    while(n>1){
-        if(n%2!=0){
-            n=n-1;ans++;
+lint solvefunction(vector<lint>&arr){
+    lint ans=-1;
+    lint x=2;
+    while(x){
+        set<lint>st;
+        for(int i=0;i<arr.size();i++){
+            st.insert(arr[i]%x);
         }
-        else{
-            n=n/2;
+        if(st.size()==2){
+            ans=x;
+            break;
         }
+        x*=2;
     }
     return ans;
 }
+void solution(int test){
+    while(test--){
+        lint n;cin >> n;
+        vector<lint>arr;
+        forloop(0,n){lint x;cin >> x;arr.push_back(x);}
+        lint ans=solvefunction(arr);
+        print(ans)
 
-void solution(){
-    lint n;cin >> n;
-    lint ans=solvefunction(n);
-    print(ans)
-
+    }
 }
 int main(){
-
-    solution();
+    int test;
+    cin >> test;
+    solution(test);
 }

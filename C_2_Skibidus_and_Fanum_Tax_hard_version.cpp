@@ -13,24 +13,23 @@ using namespace std;
 #define lintmin LLONG_MIN
 #define mp(x,y) make_pair(x,y)
 
-bool solvefunction(vector<lint>& arr1, vector<lint>& arr2) {
-    sort(arr2.begin(), arr2.end());
-    lint last = lintmin;
-
-    forloop(0, arr1.size()) {
-        lint original = arr1[i];
-        lint transformed = -1;
-        auto it = lower_bound(arr2.begin(), arr2.end(), last + original);
-        if (it != arr2.end()) {
-            transformed = *it - original;
-        }
-
-        if (transformed >= last && transformed >= original) {
-            last = transformed;
-        } else if (original >= last) {
-            last = original;
-        } else {
-            return false;
+bool solvefunction(vector<lint>&arr1,vector<lint>&arr2){
+    sort(arr2.begin(),arr2.end());
+    arr1[0]=min(arr1[0],arr2[0]-arr1[0]);
+    forloop(1,arr1.size()){
+        lint element = arr1[i];
+        lint previous = arr1[i-1];
+        auto candidate = lower_bound(arr2.begin(),arr2.end(),element+previous);
+        if(element>previous){
+            if(candidate!=arr2.end()){
+                arr1[i]=min(arr1[i],*candidate-arr1[i]);
+            }
+        }else if(element<previous){
+            if(candidate!=arr2.end()){
+                arr1[i]=*candidate-arr1[i];
+            }else{
+                return false;
+            }
         }
     }
     return true;

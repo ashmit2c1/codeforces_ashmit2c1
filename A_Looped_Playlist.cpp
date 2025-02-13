@@ -18,28 +18,29 @@ pair<lint,lint>solvefunction2(vector<lint>&arr,lint p){
     forloop(0,arr.size()){
         sum+=arr[i];
     }
-    lint completecycle = p/sum;
+    lint cycles = p/sum;
     p=p%sum;
     if(p==0){
-        return {1,completecycle};
+        return {1,cycles*arr.size()};
     }
-    lint minlen = lintmax;
+    lint minlen=lintmax;
     lint index=-1;
-    for(int start=0;start<arr.size();start++){
+    for(lint start=0;start<arr.size();start++){
         lint current=0;
         lint cnt=0;
-        index=start;
+        lint currindex = start ;
         while(current<p){
-            current+=arr[start];
+            current+=arr[currindex];
             cnt++;
-            index=(index+start)%arr.size();
+            currindex = (currindex + 1)%arr.size();
         }
-        minlen=min(minlen,cnt);
+        if(cnt<minlen){
+            minlen=cnt;
+            index=start;
+        }
     }
-    lint tot = completecycle*arr.size() + minlen;
-    return {index+1,tot};
+    return {index+1,cycles*arr.size()+minlen};
 }
-
 void solution(){
     lint n;lint p;
     cin >> n >> p;

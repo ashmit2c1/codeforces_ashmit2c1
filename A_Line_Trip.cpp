@@ -14,18 +14,28 @@ using namespace std;
 #define mp(x,y) make_pair(x,y)
 
 
-lint solvefunction(string s){
-    lint l = s.size();
-    lint ans=0;
-    ans+=(s[0]-'0');
-    l--;
-    ans+=9*l;
-    return ans;
+lint solvefunction(vector<lint>&arr){
+    lint dist = arr[arr.size()-1]-arr[arr.size()-2];
+    dist+=dist;
+    vector<lint>diff(arr.size());
+    forloop(1,arr.size()){
+        diff[i]=arr[i]-arr[i-1];
+    }
+    forloop(0,diff.size()){
+        dist=max(dist,diff[i]);
+    }
+    return dist;
 }
+
 void solution(int test){
     while(test--){
-        string s;cin >> s;
-        lint ans=solvefunction(s);
+        lint n;cin >> n;
+        lint distance;cin >> distance;
+        vector<lint>arr;
+        arr.push_back(0);
+        forloop(0,n){lint x;cin >> x;arr.push_back(x);}
+        arr.push_back(distance);
+        lint ans=solvefunction(arr);
         print(ans)
 
     }

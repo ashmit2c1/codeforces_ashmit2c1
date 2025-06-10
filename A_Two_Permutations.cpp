@@ -12,21 +12,28 @@ using namespace std;
 #define lintmax LLONG_MAX
 #define lintmin LLONG_MIN
 #define mp(x,y) make_pair(x,y)
+bool solvefunction(lint n,lint a,lint b){
+    if(n==a && a==b){
+        return true;
+    }
+    lint diff = n-(a+b);
+    if(diff>=2){
+        return true;
+    }else{
+        return false;
+    }
 
-
-lint solvefunction(string s){
-    lint l = s.size();
-    lint ans=0;
-    ans+=(s[0]-'0');
-    l--;
-    ans+=9*l;
-    return ans;
 }
 void solution(int test){
     while(test--){
-        string s;cin >> s;
-        lint ans=solvefunction(s);
-        print(ans)
+        lint n;lint a;lint b;
+        cin >> n >> a >> b;
+        bool ans=solvefunction(n,a,b);
+        if(ans==true){
+            print("Yes")
+        }else{
+            print("No")
+        }
 
     }
 }

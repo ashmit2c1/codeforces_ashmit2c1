@@ -15,19 +15,25 @@ using namespace std;
 
 
 lint solvefunction(string s){
-    lint l = s.size();
-    lint ans=0;
-    ans+=(s[0]-'0');
-    l--;
-    ans+=9*l;
-    return ans;
+    lint left=0;
+    lint right=s.size()-1;
+    while(left<s.size() && right>=0){
+        if(s[left]!=s[right]){
+            left++;
+            right--;
+        }else{
+            return right-left+1;
+        }
+    }
+    return 0;
+
 }
 void solution(int test){
     while(test--){
+        lint n;cin >> n;
         string s;cin >> s;
         lint ans=solvefunction(s);
         print(ans)
-
     }
 }
 int main(){

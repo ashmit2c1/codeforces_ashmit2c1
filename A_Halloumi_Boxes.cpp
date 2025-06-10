@@ -14,19 +14,30 @@ using namespace std;
 #define mp(x,y) make_pair(x,y)
 
 
-lint solvefunction(string s){
-    lint l = s.size();
-    lint ans=0;
-    ans+=(s[0]-'0');
-    l--;
-    ans+=9*l;
-    return ans;
+bool solvefunction(vector<lint>&arr,lint k){
+    if(k>=2){
+        return true;
+    }else{
+        for(int i=1;i<arr.size();i++){
+            if(arr[i]<arr[i-1]){
+                return false;
+            }
+        }
+        return true;
+    }
 }
 void solution(int test){
     while(test--){
-        string s;cin >> s;
-        lint ans=solvefunction(s);
-        print(ans)
+        lint n;lint size;
+        cin >> n >> size;
+        vector<lint>arr;
+        forloop(0,n){lint x;cin >> x;arr.push_back(x);}
+        bool ans=solvefunction(arr,size);
+        if(ans==true){
+            print("YES")
+        }else{
+            print("NO")
+        }
 
     }
 }

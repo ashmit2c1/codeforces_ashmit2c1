@@ -13,21 +13,33 @@ using namespace std;
 #define lintmin LLONG_MIN
 #define mp(x,y) make_pair(x,y)
 
-
-lint solvefunction(string s){
-    lint l = s.size();
-    lint ans=0;
-    ans+=(s[0]-'0');
-    l--;
-    ans+=9*l;
-    return ans;
+lint solvefunction(vector<lint>&arr){
+    lint n=arr.size();
+    if(n&1){
+        lint current = arr[0];
+        forloop(1,arr.size()){
+            current=current^arr[i];
+        }
+        return current;
+    }else{
+        lint current=arr[0];
+        forloop(1,arr.size()){
+            current=current^arr[i];
+        }
+        if(current==0){
+            return 0;
+        }else{
+            return -1;
+        }
+    }
 }
 void solution(int test){
     while(test--){
-        string s;cin >> s;
-        lint ans=solvefunction(s);
+        lint n;cin >> n;
+        vector<lint>arr;
+        forloop(0,n){lint x;cin >> x;arr.push_back(x);}
+        lint ans=solvefunction(arr);
         print(ans)
-
     }
 }
 int main(){

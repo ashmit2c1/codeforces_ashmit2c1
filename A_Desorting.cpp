@@ -11,21 +11,29 @@ using namespace std;
 #define intmin INT_MIN
 #define lintmax LLONG_MAX
 #define lintmin LLONG_MIN
-#define mp(x,y) make_pair(x,y)
 
-
-lint solvefunction(string s){
-    lint l = s.size();
-    lint ans=0;
-    ans+=(s[0]-'0');
-    l--;
-    ans+=9*l;
-    return ans;
+lint solvefunction(vector<lint>&arr){
+    if(is_sorted(arr.begin(),arr.end())==false){
+        return 0;
+    }
+    lint ops=0;
+    lint mindiff=lintmax;
+    forloop(1,arr.size()){
+        lint diff = arr[i]-arr[i-1];
+        if(diff==0){
+            return 1;
+        }
+        mindiff=min(mindiff,diff);
+    }
+    ops =1+  (mindiff/2);
+    return ops;
 }
 void solution(int test){
     while(test--){
-        string s;cin >> s;
-        lint ans=solvefunction(s);
+        lint n;cin >> n;
+        vector<lint>arr;
+        forloop(0,n){lint x; cin >> x;arr.push_back(x);}
+        lint ans=solvefunction(arr);
         print(ans)
 
     }
